@@ -11,7 +11,7 @@ countShipPiecesInRow.  ---CHECK
 countShipPiecesInCol.   ---CHECK
 countWaterPiecesInRow.   ---CHECK
 countWaterPiecesInCol
-isBoard
+isBoard		---CHECK
 isSolution
 printBoard
 isValidMove

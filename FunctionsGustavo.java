@@ -136,7 +136,15 @@ public class FunctionsGustavo {
 		if (rowClues.length() != rows || colClues.length() != cols)
 			return false;
 		for (int i = 0; i < rowClues.length(); i++)
-			Integer.is
+		{
+			if (!Character.isDigit(i) && rowClues.charAt(i) - '0' < cols)
+				return false;
+		}
+		for (int i = 0; i < colClues.length(); i++)
+		{
+			if (!Character.isDigit(i) && colClues.charAt(i) - '0' < rows)
+				return false;
+		}
 		return true;
 	}
 
