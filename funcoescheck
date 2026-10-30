@@ -1,0 +1,19 @@
+int rowOfPositions(int pos, int numColumns) ---CHECK
+int ColumnsOfPositions(int pos, int numColumns) ---CHECK
+boolean isShipPiece(char c) ---CHECK
+int positionNumber(int row, int column, int numColumns) ---CHECK
+int numberRows(int size, int numColumns) ---CHECK
+boolean isShipPiece(char c) ---CHECK
+boolean isFillingChar(char c) ---CHECK
+boolean isValidBoardConstrucion( String stc) ---CHECK
+boolean isFilled  ---CHECK
+countShipPiecesInRow.  ---CHECK
+countShipPiecesInCol.   ---CHECK
+countWaterPiecesInRow.   ---CHECK
+countWaterPiecesInCol
+isBoard
+isSolution
+printBoard
+isValidMove
+playMove
+void play
