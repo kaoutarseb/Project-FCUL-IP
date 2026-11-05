@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * Functions
  */
@@ -137,15 +139,59 @@ public class FunctionsGustavo {
 			return false;
 		for (int i = 0; i < rowClues.length(); i++)
 		{
-			if (!Character.isDigit(i) && rowClues.charAt(i) - '0' < cols)
+			if (!Character.isDigit(rowClues.charAt(i)) && Character.getNumericValue(rowClues.charAt(i)) < cols)
 				return false;
 		}
 		for (int i = 0; i < colClues.length(); i++)
 		{
-			if (!Character.isDigit(i) && colClues.charAt(i) - '0' < rows)
+			if (!Character.isDigit(colClues.charAt(i)) && Character.getNumericValue(colClues.charAt(i)) < rows)
 				return false;
 		}
 		return true;
 	}
 
+	public static void	printBoard(int row, int col, String stc, String rowClues, String colClues)
+	{
+		int	row_index = 0;
+	
+		for (int i = 0; i < stc.length(); i++)
+		{
+			System.out.print(stc.charAt(i));
+			if ((i + 1) % col == 0)
+				System.out.println(" " + rowClues.charAt(row_index++));
+		}
+		System.out.println(colClues);
+	}
+
+	public static void play(Scanner sc, int rows, int cols, String board, String rowClues, String colClues) {
+		String	stc = board;
+		int 	position = 0;
+		String	piecePlay;
+		boolean	checkInvalid;
+	
+		do
+		{
+			checkInvalid = false;
+			printBoard(rows, cols, stc, rowClues, colClues);
+			System.out.println("Introduza uma jogada (ou -1 para sair).");
+			System.out.print("Posicao: ");
+			if (sc.hasNextInt())
+				position = sc.nextInt();
+			else
+			{
+				checkInvalid = true;
+				sc.nextLine();
+			}
+			piecePlay = sc.nextLine();
+			if (checkInvalid == false)
+				checkInvalid = piecePlay.length() > 1;
+			if (checkInvalid == false)
+				checkInvalid = isShipPiece(piecePlay.charAt(0));
+			if (position != -1 && checkInvalid == false)
+				stc = playMove(stc, position, piecePlay.charAt(0));
+			if (checkInvalid)
+				System.out.println("Jogada inválida! Por favor tente novamente, ou indique -1 como posição de jogada para terminar.");
+		}while (position != -1);
+		
+	}
 }
