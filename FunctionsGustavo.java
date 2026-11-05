@@ -82,11 +82,11 @@ public class FunctionsGustavo {
 	public static int countShipPiecesInCol(int col, String stc, int numColumns)
 	{
 		int numPieces = 0;
-	
-		while (col < stc.length())
+		int posicao = col-1;
+		while (posicao < stc.length())
 		{
-			numPieces += isShipPiece(stc.charAt(col)) ? 1 : 0;
-			col += numColumns;
+			numPieces += isShipPiece(stc.charAt(posicao)) ? 1 : 0;
+			posicao += numColumns;
 		}
 		return numPieces;
 	}

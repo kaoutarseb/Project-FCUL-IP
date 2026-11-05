@@ -98,19 +98,33 @@ public class FuncoesKaoutar {
     
     static int countWaterPiecesInCol (int col, String stc, int numColumns  ){
         int contador = 0;
-        for (int i = 0; i <= col ; i++){
-            if (stc.charAt((col-1)+(5*i)) == 'X')
+        int posicao = col -1 ;
+        while(posicao < stc.length()){
+            if (stc.charAt(posicao) == 'X')
                 contador ++;
+            posicao +=numColumns;
         }
         return contador;
     }
-    static int isValidMove (String board, String stc, char c, int pos ){
-        int contador = 0;
-        for (int i = 0; i <= col ; i++){
-            if (stc.charAt((col-1)+(5*i)) == 'X')
-                contador ++;
+    static boolean isValidMove (String board, String stc, char c, int pos ){
+  
+        if (pos<0 || pos >= stc.length() )
+                return false;
+
+        if (isFillingChar(board.charAt(pos)) );
+            return false;
+
+        if (!isFillingChar( c ))
+            return false;
+        
+        return true;
+
+        
+
+
         }
-        return contador;
+    }
+        return ;
     }
 
     

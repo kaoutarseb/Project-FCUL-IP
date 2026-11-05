@@ -10,7 +10,7 @@ boolean isFilled  ---CHECK
 countShipPiecesInRow.  ---CHECK
 countShipPiecesInCol.   ---CHECK
 countWaterPiecesInRow.   ---CHECK
-countWaterPiecesInCol.   
+countWaterPiecesInCol.   ---CHECK
 isBoard		---CHECK
 isSolution
 printBoard
