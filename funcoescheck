@@ -14,6 +14,6 @@ countWaterPiecesInCol.   ---CHECK
 isBoard		---CHECK
 isSolution
 printBoard
-isValidMove
-playMove
-void play
+isValidMove ---CHECK
+playMove.  ---CHECK
+void play. ---CHECK

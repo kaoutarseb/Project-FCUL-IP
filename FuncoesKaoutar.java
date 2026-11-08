@@ -95,7 +95,13 @@ public class FuncoesKaoutar {
         return contador;
     }
     
-    
+    /**
+     * retorna o número de peças de água (‘X’) já preenchidas na coluna col.
+     * @param col o número da coluna
+     * @param stc uma solução-tabuleiro-em-construção,
+     * @param numColumns o número total das colunas
+     * @return retorna o número de peças de água na coluna
+     */
     static int countWaterPiecesInCol (int col, String stc, int numColumns  ){
         int contador = 0;
         int posicao = col -1 ;
@@ -106,6 +112,15 @@ public class FuncoesKaoutar {
         }
         return contador;
     }
+
+    /**
+     * Verifica se a jogada é válida
+     * @param board o tabuleiro inicial 
+     * @param stc uma solução-tabuleiro-em-construção
+     * @param c a ação jogada
+     * @param pos uma posição da jogada
+     * @return retorna true se a jogada é válida e false se é inválida
+     */
     static boolean isValidMove (String board, String stc, char c, int pos ){
   
         if (pos<0 || pos >= stc.length() )
@@ -118,14 +133,142 @@ public class FuncoesKaoutar {
             return false;
         
         return true;
+    }
 
+    /**
+     * Retorna uma string que representa a solução-tabuleiro-em-construção que resulta de efetuar a jogada em stc.
+     * @param stc  uma soluçãotabuleiro-em-construção,
+     * @param c uma jogada
+     * @param pos uma posiçao do tabuleiro
+     * @return  a solução-tabuleiro-em-construção que resulta de efetuar a jogada
+     */
+    static String playMove (String stc, char c, int pos){
+        StringBuilder st = new StringBuilder(stc);
+        st.setCharAt(pos, c);
+        return st.toString();
+    }
+    
+
+
+    static boolean isSolution (int cols, int rows, String board, String rowClues, String colClues, String stc ){
+        return isFilled( stc) 
+                && sameSize(stc, board) 
+                && samePieces(stc, board) 
+                && cluesMatch( cols, rowClues, colClues, stc);
         
+    }
+    
+    
+    static boolean sameSize(String stc, String board){ 
+        for (int i = 0; i < stc.length() ; i++ ){
+            if(stc.length() != board.length() || stc.charAt(i)== '.')
+                return false;
+        }
+        return true;
+    }
 
+    static boolean samePieces(String stc, String board){ 
+        for (int i = 0; i < stc.length() ; i++ ){
+            if( board.charAt(i)!= '.' &&  stc.charAt(i)== board.charAt(i))
+                return false;
+        }
+        return true;
+    }
+
+    static boolean cluesMatch( int cols, String rowClues, String colClues, String stc){ 
+        for (int i = 0; i < rowClues.length() ; i ++){
+            if (countShipPiecesInRow( i+1, stc, cols) != Character.getNumericValue(rowClues.charAt(i)))
+                return false;
+        }
+
+        for (int i = 0; i < colClues.length() ; i ++){
+            if (countShipPiecesInCol( i+1, stc, cols) != Character.getNumericValue(colClues.charAt(i)))
+                return false;
+        }
+        return true;
+    }
+
+    // lets go 
+
+    //fake main
+    static boolean isValidShips( int rows, int cols, String stc){ 
+    for (int r = 0 ; r < rows; r++){
+        for (int c = 0 ;c < cols ; c++){
+            if (!wellSurrounded( stc, rows, cols, r, c))
+                return false;
+            
 
         }
     }
-        return ;
+    }
+    static char character(String stc, int rows, int cols, int r, int c) {
+        if (r < 0 || r >= rows || c < 0 || c >= cols) return 'X';
+        return stc.charAt(r * cols + c);
+    }
+    /**
+     * 
+     * @param c
+     * @param r
+     * @param rows
+     * @param cols
+     * @param stc
+     * @return
+     */
+    static boolean diagonalIsWater( int c, int r, int rows, int cols, String stc){
+        return character(stc, rows, cols, r-1, c-1) == 'X' && character(stc, rows, cols, r-1, c+1) == 'X' 
+        && character(stc, rows, cols, r+1, c-1) == 'X' && character(stc, rows, cols, r+1, c+1) == 'X';
     }
 
+    /**
+     * 
+     * @param stc
+     * @param rows
+     * @param cols
+     * @param r
+     * @param c
+     * @return
+     */
+    static boolean wellSurrounded( String stc, int rows, int cols, int r, int c){
+        char pos = character(stc, rows, cols, r, c);
+        char cima = character(stc, rows, cols, r-1, c);
+        char baixo = character(stc, rows, cols, r+1, c);
+        char esquerda = character(stc, rows, cols, r, c-1);
+        char direita = character(stc, rows, cols, r, c+1);
+        if( !diagonalIsWater( c, r, rows, cols, stc))
+            return false;
+        if(pos == 'C'){
+            return esquerda == 'X' && direita == 'X' && cima == 'X' && baixo == 'X';
+        }
+        if(pos == 'L'){
+            return esquerda == 'X' && (direita== 'R' || direita== 'M' ) && cima == 'X' && baixo == 'X';
+        }
+        if(pos == 'R'){
+            return (esquerda == 'L'|| esquerda == 'M' )  && direita == 'X' && cima == 'X' && baixo == 'X';
+        }
+        if(pos == 'B'){
+            return esquerda== 'X'  && direita == 'X'  && (cima == 'T' || cima == 'M' ) && baixo == 'X';
+        }
+        if (pos == 'T'){
+            return esquerda == 'X'  && direita == 'X' && cima == 'X'  && (baixo== 'B' || baixo == 'M' );
+        }
+        if (pos == 'M'){
+            boolean vertical = esquerda == 'X'  && direita == 'X' && (cima == 'T' || cima == 'M' )  && (baixo == 'B' || baixo == 'M' );
+            boolean horizontal = (esquerda== 'L' || esquerda == 'M' )  && (direita == 'R' || direita== 'M' ) && cima == 'X'  && baixo == 'X' ;
+            return vertical || horizontal;
+        }
+    }
+    static int allShips(String stc, int c, int r, int rows, int cols){
+        char pos = character(stc, rows, cols, r, c);
+        int cont=0;
+        if (pos == 'C'){
+            boolean tamanho1 = true;
+        }
+        if (pos == 'U'){
+            while (character(stc, rows, cols, r, c) != 'B')
+                r++;
+                cont ++;
+        }return cont;
+    }
     
+
 }
