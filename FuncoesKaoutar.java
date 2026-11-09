@@ -257,18 +257,29 @@ public class FuncoesKaoutar {
             return vertical || horizontal;
         }
     }
-    static int allShips(String stc, int c, int r, int rows, int cols){
+    static boolean allShips(String stc, int c, int r, int rows, int cols){
         char pos = character(stc, rows, cols, r, c);
-        int cont=0;
-        if (pos == 'C'){
-            boolean tamanho1 = true;
-        }
-        if (pos == 'U'){
-            while (character(stc, rows, cols, r, c) != 'B')
-                r++;
-                cont ++;
-        }return cont;
-    }
+        boolean tamanho1;
+        boolean tamanho2;
+        boolean tamanho3;
+        boolean tamanho4;
     
-
+        if (pos == 'C'){
+            tamanho1 = true;
+        }
+        if (pos == 'T' && character(stc, rows, cols, r + 1, c) == 'B'){
+            tamanho2 = true;
+        if (pos == 'L' && character(stc, rows, cols, r + 1, c) == 'R')
+            tamanho2 = true;
+        if (pos == 'M')
+        {
+            if (character(stc, rows, cols, r + 1, c) == 'M' || character(stc, rows, cols, r - 1, c) == 'M')
+                tamanho4 = true;
+            else if (character(stc, rows, cols, r, c + 1) == 'M' || character(stc, rows, cols, r, c - 1) == 'M')
+                tamanho4 = true;
+            else
+                tamanho3 = true;
+        }                
+        return tamanho1 && tamanho2 && tamanho3 && tamanho4;
+    }
 }
