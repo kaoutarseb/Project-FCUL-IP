@@ -82,7 +82,7 @@ public class FunctionsGustavo {
 	public static int countShipPiecesInCol(int col, String stc, int numColumns)
 	{
 		int numPieces = 0;
-		int posicao = col-1;
+		int posicao = col - 1;
 		while (posicao < stc.length())
 		{
 			numPieces += isShipPiece(stc.charAt(posicao)) ? 1 : 0;
@@ -108,6 +108,7 @@ public class FunctionsGustavo {
 		{
 			numPieces += stc.charAt(start) == 'X' ? 1 : 0;
 		} while (start % numColumns != 0);
+
 		return numPieces;
 	}
 
@@ -125,7 +126,7 @@ public class FunctionsGustavo {
 	
 		while (col < stc.length())
 		{
-			numPieces += stc.charAt(col) == 'X' ? 1 : 0;
+			numPieces += stc.charAt(col - 1) == 'X' ? 1 : 0;
 			col += numColumns;
 		}
 		return numPieces;
@@ -137,16 +138,19 @@ public class FunctionsGustavo {
 			return false;
 		if (rowClues.length() != rows || colClues.length() != cols)
 			return false;
+
 		for (int i = 0; i < rowClues.length(); i++)
 		{
-			if (!Character.isDigit(rowClues.charAt(i)) && Character.getNumericValue(rowClues.charAt(i)) < cols)
+			if (!Character.isDigit(rowClues.charAt(i)) || Character.getNumericValue(rowClues.charAt(i)) > cols || countShipPiecesInRow(i, stc, cols) > Character.getNumericValue(rowClues.charAt(i)))
 				return false;
 		}
-		for (int i = 0; i < colClues.length(); i++)
+
+		for (int i = 0; i <= colClues.length(); i++)
 		{
-			if (!Character.isDigit(colClues.charAt(i)) && Character.getNumericValue(colClues.charAt(i)) < rows)
+			if (!Character.isDigit(colClues.charAt(i)) || Character.getNumericValue(colClues.charAt(i)) > rows  || countShipPiecesInCol(i, stc, cols) > Character.getNumericValue(colClues.charAt(i)))
 				return false;
 		}
+
 		return true;
 	}
 
@@ -175,6 +179,7 @@ public class FunctionsGustavo {
 			printBoard(rows, cols, stc, rowClues, colClues);
 			System.out.println("Introduza uma jogada (ou -1 para sair).");
 			System.out.print("Posicao: ");
+
 			if (sc.hasNextInt())
 				position = sc.nextInt();
 			else
@@ -182,16 +187,21 @@ public class FunctionsGustavo {
 				checkInvalid = true;
 				sc.nextLine();
 			}
+	
 			piecePlay = sc.nextLine();
+
 			if (checkInvalid == false)
-				checkInvalid = piecePlay.length() > 1;
+				checkInvalid = piecePlay.length() != 1;
 			if (checkInvalid == false)
-				checkInvalid = isShipPiece(piecePlay.charAt(0));
+				checkInvalid = isValidMove(stc, board, pos, piecePlay.charAt(0));
+
 			if (position != -1 && checkInvalid == false)
 				stc = playMove(stc, position, piecePlay.charAt(0));
+
 			if (checkInvalid)
 				System.out.println("Jogada inválida! Por favor tente novamente, ou indique -1 como posição de jogada para terminar.");
-		}while (position != -1);
+
+		} while (position != -1);
 		
 	}
 }
