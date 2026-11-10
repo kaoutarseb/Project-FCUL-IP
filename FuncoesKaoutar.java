@@ -269,16 +269,22 @@ public class FuncoesKaoutar {
      */
     static boolean allShips(String stc, int c, int r, int rows, int cols){
         char pos = character(stc, rows, cols, r, c);
-        boolean tamanho1;
-        boolean tamanho2;
-        boolean tamanho3;
-        boolean tamanho4;
+        boolean tamanho1 = false;
+        boolean tamanho2 = false;
+        boolean tamanho3 = false;
+        boolean tamanho4 = false;
     
-        if (pos == 'C'){
+        if (pos == 'C' && tamanho1 == false)
             tamanho1 = true;
-        }
-        if (pos == 'T' && character(stc, rows, cols, r + 1, c) == 'B'){
+        else if (pos == 'C' && tamanho1 == true )
+            return false;
+        
+            
+        if (pos == 'T' && character(stc, rows, cols, r + 1, c) == 'B')
             tamanho2 = true;
+        else if (pos == 'C' && tamanho2 == true )
+            return false;
+        
         if (pos == 'L' && character(stc, rows, cols, r + 1, c) == 'R')
             tamanho2 = true;
         if (pos == 'M')
