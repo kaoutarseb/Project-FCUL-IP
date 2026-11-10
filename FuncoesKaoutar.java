@@ -154,10 +154,10 @@ public class FuncoesKaoutar {
         return isFilled( stc) 
                 && sameSize(stc, board) 
                 && samePieces(stc, board) 
-                && cluesMatch( cols, rowClues, colClues, stc);
+                && cluesMatch( cols, rowClues, colClues, stc)
+                && allShips(stc, rows, cols);
         
     }
-    
     
     static boolean sameSize(String stc, String board){ 
         for (int i = 0; i < stc.length() ; i++ ){
@@ -169,7 +169,7 @@ public class FuncoesKaoutar {
 
     static boolean samePieces(String stc, String board){ 
         for (int i = 0; i < stc.length() ; i++ ){
-            if( board.charAt(i)!= '.' &&  stc.charAt(i)== board.charAt(i))
+            if( board.charAt(i)!= '.' &&  stc.charAt(i)!= board.charAt(i))
                 return false;
         }
         return true;
@@ -188,20 +188,7 @@ public class FuncoesKaoutar {
         return true;
     }
 
-    // lets go 
-
-    //fake main
-    static boolean isValidShips( int rows, int cols, String stc){ 
-
-        for (int r = 0 ; r < rows; r++){
-            for (int c = 0 ;c < cols ; c++){
-                if (!wellSurrounded( stc, rows, cols, r, c))
-                    return false;
-            
-
-        }
-    }
-    }
+    
     static char character(String stc, int rows, int cols, int r, int c) {
         if (r < 0 || r >= rows || c < 0 || c >= cols) return 'X';
         return stc.charAt(r * cols + c);
@@ -257,6 +244,7 @@ public class FuncoesKaoutar {
             boolean horizontal = (esquerda== 'L' || esquerda == 'M' )  && (direita == 'R' || direita== 'M' ) && cima == 'X'  && baixo == 'X' ;
             return vertical || horizontal;
         }
+        return true;
     }
 
     /**
@@ -268,35 +256,55 @@ public class FuncoesKaoutar {
      * @param cols
      * @return
      */
-    static boolean allShips(String stc, int c, int r, int rows, int cols){
-        char pos = character(stc, rows, cols, r, c);
+    static boolean allShips(String stc, int rows, int cols){
+        
+        
         boolean tamanho1 = false;
         boolean tamanho2 = false;
         boolean tamanho3 = false;
         boolean tamanho4 = false;
-    
-        if (pos == 'C' && tamanho1 == false)
-            tamanho1 = true;
-        else if (pos == 'C' && tamanho1 == true )
-            return false;
-        
-            
-        if (pos == 'T' && character(stc, rows, cols, r + 1, c) == 'B')
-            tamanho2 = true;
-        else if (pos == 'C' && tamanho2 == true )
-            return false;
-        
-        if (pos == 'L' && character(stc, rows, cols, r + 1, c) == 'R')
-            tamanho2 = true;
-        if (pos == 'M')
-        {
-            if (character(stc, rows, cols, r + 1, c) == 'M' || character(stc, rows, cols, r - 1, c) == 'M')
-                tamanho4 = true;
-            else if (character(stc, rows, cols, r, c + 1) == 'M' || character(stc, rows, cols, r, c - 1) == 'M')
-                tamanho4 = true;
-            else
-                tamanho3 = true;
-        }                
+        for (int r = 0 ; r < rows; r++){
+            for (int c = 0 ;c < cols ; c++){
+                char pos = character(stc, rows, cols, r, c);
+                if (pos != 'X' && !wellSurrounded( stc, rows, cols, r, c))
+                    return false;
+                if (pos == 'C' && tamanho1 == false)
+                    tamanho1 = true;
+                else if (pos == 'C' && tamanho1 == true )
+                    return false;
+                
+                    
+                if (pos == 'T' && character(stc, rows, cols, r + 1, c) == 'B')
+                    tamanho2 = true;
+                else if ((pos == 'T' && character(stc, rows, cols, r + 1, c) == 'B' ) && tamanho2 == true )
+                    return false;
+                
+                if (pos == 'L' && character(stc, rows, cols, r, c+1) == 'R')
+                    tamanho2 = true;
+                else if ((pos == 'L' && character(stc, rows, cols, r, c+1) == 'R' ) && tamanho2 == true )
+                    return false;
+
+                if (pos == 'M')
+                {
+                    if (character(stc, rows, cols, r + 1, c) == 'M' || character(stc, rows, cols, r - 1, c) == 'M')
+                        tamanho4 = true;
+                    else if ((character(stc, rows, cols, r + 1, c) == 'M' || character(stc, rows, cols, r - 1, c) == 'M') && tamanho4 == true )
+                        return false;
+
+                    else if (character(stc, rows, cols, r, c + 1) == 'M' || character(stc, rows, cols, r, c - 1) == 'M')
+                        tamanho4 = true;
+                    else if ((character(stc, rows, cols, r, c + 1) == 'M' || character(stc, rows, cols, r, c - 1) == 'M') && tamanho4 == true )
+                        return false;
+
+                    else {
+                        if (tamanho3 == false)
+                            tamanho3 = true;
+                        else
+                            return false;
+                    }
+                }         
+            }
+        }     
         return tamanho1 && tamanho2 && tamanho3 && tamanho4;
     }
 }
