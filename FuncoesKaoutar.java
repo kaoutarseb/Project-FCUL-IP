@@ -257,6 +257,16 @@ public class FuncoesKaoutar {
             return vertical || horizontal;
         }
     }
+
+    /**
+     * 
+     * @param stc
+     * @param c
+     * @param r
+     * @param rows
+     * @param cols
+     * @return
+     */
     static boolean allShips(String stc, int c, int r, int rows, int cols){
         char pos = character(stc, rows, cols, r, c);
         boolean tamanho1;
