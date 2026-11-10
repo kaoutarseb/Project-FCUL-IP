@@ -192,10 +192,11 @@ public class FuncoesKaoutar {
 
     //fake main
     static boolean isValidShips( int rows, int cols, String stc){ 
-    for (int r = 0 ; r < rows; r++){
-        for (int c = 0 ;c < cols ; c++){
-            if (!wellSurrounded( stc, rows, cols, r, c))
-                return false;
+
+        for (int r = 0 ; r < rows; r++){
+            for (int c = 0 ;c < cols ; c++){
+                if (!wellSurrounded( stc, rows, cols, r, c))
+                    return false;
             
 
         }
