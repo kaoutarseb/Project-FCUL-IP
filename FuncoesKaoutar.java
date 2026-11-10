@@ -123,7 +123,7 @@ public class FuncoesKaoutar {
      */
     static boolean isValidMove (String board, String stc, char c, int pos ){
   
-        if (pos<0 || pos >= stc.length() )
+        if ((pos < 0 && pos != -1) || pos >= stc.length() )
                 return false;
 
         if (isFillingChar(board.charAt(pos)) );

@@ -187,20 +187,12 @@ public class FunctionsGustavo {
 				checkInvalid = true;
 				sc.nextLine();
 			}
-	
 			piecePlay = sc.nextLine();
-
-			if (checkInvalid == false)
-				checkInvalid = piecePlay.length() != 1;
-			if (checkInvalid == false)
-				checkInvalid = isValidMove(stc, board, pos, piecePlay.charAt(0));
-
-			if (position != -1 && checkInvalid == false)
+			checkInvalid = checkInvalid || piecePlay.length() != 1 || !isValidMove(stc, board, position, piecePlay.charAt(0));
+			if (position != -1 && !checkInvalid )
 				stc = playMove(stc, position, piecePlay.charAt(0));
-
 			if (checkInvalid)
 				System.out.println("Jogada inválida! Por favor tente novamente, ou indique -1 como posição de jogada para terminar.");
-
 		} while (position != -1);
 		
 	}
