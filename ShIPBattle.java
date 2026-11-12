@@ -96,18 +96,16 @@ public class ShIPBattle {
 	 * @return True se houver Peças de tipo Water na row
 	 */
 
-	public static int countWaterPiecesInRow(int row, String stc, int numColumns)
-	{
-		int start = (row - 1) * numColumns;
-		int numPieces = 0;
-	
-		do
-		{
-			numPieces += stc.charAt(start) == 'X' ? 1 : 0;
-		} while (start % numColumns != 0);
-
-		return numPieces;
-	}
+	static int countWaterPiecesInRow (int row, String stc, int numColumns  ){
+        int contador = 0;
+        int start = ((row-1)  * numColumns);
+        int end = (row * numColumns )-1; 
+        for (int i = start; i <= end ; i++){
+            if (stc.charAt(i) == 'X')
+                contador ++;
+        }
+        return contador;
+    }
 
 	/**
 	 * 
