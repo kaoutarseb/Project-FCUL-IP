@@ -85,7 +85,6 @@ public class ShIPBattle {
 			numPieces += isShipPiece(stc.charAt(posicao)) ? 1 : 0;
 			posicao += numColumns;
 		}
-		System.out.println("SAIU");
 		return numPieces;
 	}
 
@@ -229,7 +228,7 @@ public class ShIPBattle {
      */
     static boolean isValidMove(String stc, String board, int pos, char c ){
   
-        if ((pos < 0 && pos != -1) || pos >= stc.length() )
+        if ((pos < 0 && pos != -1)|| pos >= stc.length() )
             return false;
         if (isFillingChar(board.charAt(pos)))
             return false;
@@ -448,9 +447,13 @@ public class ShIPBattle {
 			piecePlay = sc.nextLine();
 			checkInvalid = checkInvalid || piecePlay.length() != 1 || !isValidMove(stc, board, position, piecePlay.charAt(0));
 			if (position != -1 && !checkInvalid )
-				stc = playMove(stc, position - 1, piecePlay.charAt(0));
-			if (checkInvalid)
-				System.out.println("Jogada inválida! Por favor tente novamente, ou indique -1 como posição de jogada para terminar.");
+				stc = playMove(stc, position , piecePlay.charAt(0));
+			if (checkInvalid){
+                if ( position == -1)
+                    System.out.println("Saiu do programa. ");
+				else
+                    System.out.println("Jogada inválida! Por favor tente novamente, ou indique -1 como posição de jogada para terminar.");
+            }
 		} while (position != -1);
 		
 	}
