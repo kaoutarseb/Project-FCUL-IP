@@ -32,7 +32,7 @@ public class ShIPBattle {
 
 	public static  int numberRows(int size, int numColumns)
 	{
-		return (size / numColumns) + 1;
+		return (size / numColumns);
 	}
 
 	/**
@@ -192,7 +192,7 @@ public class ShIPBattle {
 
     
     static boolean isValidBoardInConstruction( String stc){
-        if (stc.isEmpty())
+        if (stc == null || stc.isEmpty())
             return false;
        
         for (int i= 0 ; i < stc.length(); i++){
