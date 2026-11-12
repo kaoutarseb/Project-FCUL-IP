@@ -131,7 +131,7 @@ public class ShIPBattle {
 
 	public static boolean isBoard(int rows, int cols, String stc, String rowClues, String colClues)
 	{
-		if (rows * cols != stc.length())
+		if (rows * cols != stc.length() || rows * cols < 10)
 			return false;
 		if (rowClues.length() != rows || colClues.length() != cols)
 			return false;
