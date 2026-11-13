@@ -251,7 +251,7 @@ public class ShIPBattle {
     
 
 
-    static boolean isSolution (int cols, int rows, String board, String rowClues, String colClues, String stc ){
+    static boolean isSolution (int rows, int cols, String board, String rowClues, String colClues, String stc ){
         return isFilled( stc) 
                 && sameSize(stc, board) 
                 && samePieces(stc, board) 
@@ -281,7 +281,6 @@ public class ShIPBattle {
             if (countShipPiecesInRow( i+1, stc, cols) != Character.getNumericValue(rowClues.charAt(i)))
                 return false;
         }
-
         for (int i = 0; i < colClues.length() ; i ++){
             if (countShipPiecesInCol( i+1, stc, cols) != Character.getNumericValue(colClues.charAt(i)))
                 return false;
@@ -364,6 +363,7 @@ public class ShIPBattle {
         boolean tamanho2 = false;
         boolean tamanho3 = false;
         boolean tamanho4 = false;
+    
         for (int r = 0 ; r < rows; r++){
             for (int c = 0 ;c < cols ; c++){
                 char pos = character(stc, rows, cols, r, c);
@@ -405,7 +405,7 @@ public class ShIPBattle {
                     }
                 }         
             }
-        }     
+        }
         return tamanho1 && tamanho2 && tamanho3 && tamanho4;
     }
 
@@ -431,6 +431,11 @@ public class ShIPBattle {
 	
 		do
 		{
+            if (isSolution(rows, cols, board, rowClues, colClues, stc))
+            {
+                System.out.println("Parabens voce Ganhou!!!");
+                return ;
+            }
 			checkInvalid = false;
 			printBoard(rows, cols, stc, rowClues, colClues);
 			System.out.println("Introduza uma jogada (ou -1 para sair).");
