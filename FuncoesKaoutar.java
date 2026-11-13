@@ -86,7 +86,7 @@ public class FuncoesKaoutar {
      */
     static int countWaterPiecesInRow (int row, String stc, int numColumns  ){
         int contador = 0;
-        int start = ((row-1)  * numColumns);
+        int start = ((row-1)  * numColumns) ;
         int end = (row * numColumns )-1; 
         for (int i = start; i <= end ; i++){
             if (stc.charAt(i) == 'X')

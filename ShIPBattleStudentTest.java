@@ -252,18 +252,19 @@ public class ShIPBattleStudentTest {
         error = checkEqual(true,
                 ShIPBattle.isSolution(4, 5, BOARD_4X5, ROW_CLUES_4X5, COL_CLUES_4X5, SOL_4X5),
                 "4x5 sol") || error;
-
+        System.out.println("Erro 1 :" + error);
         // nao preenchido
         error = checkEqual(false,
                 ShIPBattle.isSolution(4, 5, BOARD_4X5, ROW_CLUES_4X5, COL_CLUES_4X5, BOARD_4X5),
                 "unfilled") || error;
+        System.out.println("Erro 2 :" + error);
 
         // nao mantem pistas iniciais (L na posicao 2)
         String brokenGiven = "TXXMRMXXXXMXCXTBXXXB";
         error = checkEqual(false,
                 ShIPBattle.isSolution(4, 5, BOARD_4X5, ROW_CLUES_4X5, COL_CLUES_4X5, brokenGiven),
                 "given L") || error;
-
+        System.out.println("Erro 3 :" + error);
         System.out.println(error ? "FAIL" : "PASS");
     }
 
