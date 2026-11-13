@@ -24,10 +24,12 @@ public class ShIPBattle {
 	}
 
 	/**
-	 * 
-	 * @param size Numero de posicoes existentes.
-	 * @param numColumns Numero total de colunas
-	 * @return Numero de rows.
+	 * Calcula o número de linhas de um tabuleiro.
+	 * @param size número total de posições do tabuleiro
+     * @param numColumns número de colunas do tabuleiro
+     * @requires {@code size > 0 && numColumns > 0 && size % numColumns == 0}
+     * @ensures {@code resultado * numColumns == size}
+     * @return o número de linhas do tabuleiro
 	 */
 
 	public static  int numberRows(int size, int numColumns)
@@ -40,8 +42,9 @@ public class ShIPBattle {
 	 * @param row numero de linha
 	 * @param column Coluna atualizada 
 	 * @param numColumns Numero total de colunas
-	 * @return 
-	 */
+	 * @return a posição (numerada a partir de 0) na linha row e coluna column
+     * @ensures  {@code rowOfPosition(resultado, numColumns) == row && columnOfPosition(resultado, numColumns) == column}
+     */
 
 	public static  int positionNumber(int row, int column, int numColumns)
 	{
@@ -49,11 +52,15 @@ public class ShIPBattle {
 	}
 
 	/**
-	 * 
-	 * @param row Linha a ser analizada
-	 * @param stc String com conteudo
-	 * @param numColumns Numero total de colunas em uma linha
-	 * @return True se houver Peças de tipo Ship na row
+	 * * Conta o número de peças de navio já preenchidas numa linha.
+     *
+     * @param row linha a considerar (numerada a partir de 1)
+     * @param stc solução-tabuleiro-em-construção
+     * @param numColumns número de colunas do tabuleiro
+     * @requires isValidBoardInConstruction(stc) && numColumns > 0
+     *           && stc.length() % numColumns == 0
+     *           && 1 <= row <= numberRows(stc.length(), numColumns)
+     * @return o número de peças de navio na linha row de stc
 	 */
 
 	public static int countShipPiecesInRow(int row, String stc, int numColumns)
@@ -69,11 +76,14 @@ public class ShIPBattle {
 	}
 
 	/**
-	 * 
-	 * @param col coluna a ser analizada
-	 * @param stc String com conteudo
-	 * @param numColumns Numero total de colunas em uma linha
-	 * @return True se houver peças desse tipo Ship na col.
+	  * Conta o número de peças de navio já preenchidas numa coluna.
+     *
+     * @param col coluna a considerar (numerada a partir de 1)
+     * @param stc solução-tabuleiro-em-construção
+     * @param numColumns número de colunas do tabuleiro
+     * @requires isValidBoardInConstruction(stc) && numColumns > 0
+     *           && stc.length() % numColumns == 0 && 1 <= col <= numColumns
+     * @return o número de peças de navio na coluna col de stc
 	 */
 
 	public static int countShipPiecesInCol(int col, String stc, int numColumns)
@@ -89,11 +99,15 @@ public class ShIPBattle {
 	}
 
 	/**
-	 * 
-	 * @param row Linha a ser analizada
-	 * @param stc String com conteudo
-	 * @param numColumns Numero total de colunas em uma linha
-	 * @return True se houver Peças de tipo Water na row
+	 * Conta o número de peças de água ('X') já preenchidas numa linha.
+     *
+     * @param row linha a considerar (numerada a partir de 1)
+     * @param stc solução-tabuleiro-em-construção
+     * @param numColumns número de colunas do tabuleiro
+     * @requires isValidBoardInConstruction(stc) && numColumns > 0
+     *           && stc.length() % numColumns == 0
+     *           && 1 <= row <= numberRows(stc.length(), numColumns)
+     * @return o número de peças de água na linha row de stc
 	 */
 
 	static int countWaterPiecesInRow (int row, String stc, int numColumns  ){
@@ -108,11 +122,14 @@ public class ShIPBattle {
     }
 
 	/**
-	 * 
-	 * @param col coluna a ser analizada
-	 * @param stc String com conteudo
-	 * @param numColumns Numero total de colunas em uma linha
-	 * @return True se houver peças desse tipo Water na col.
+	* Conta o número de peças de água ('X') já preenchidas numa coluna.
+     *
+     * @param col coluna a considerar (numerada a partir de 1)
+     * @param stc solução-tabuleiro-em-construção
+     * @param numColumns número de colunas do tabuleiro
+     * @requires isValidBoardInConstruction(stc) && numColumns > 0
+     *           && stc.length() % numColumns == 0 && 1 <= col <= numColumns
+
 	 */
 
 	public static int countWaterPiecesInCol(int col, String stc, int numColumns)
@@ -126,7 +143,21 @@ public class ShIPBattle {
 		}
 		return numPieces;
 	}
-
+    /**
+     * Verifica várias condições necessárias para stc ser um tabuleiro inicial
+     * válido: tamanho de stc igual a rows * cols; tamanhos de rowClues e
+     * colClues iguais a rows e cols; pistas formadas só por dígitos; e, para
+     * cada linha/coluna, existirem posições suficientes para as peças de navio
+     * da pista sem que as peças já colocadas a ultrapassem.
+     *
+     * @param rows número de linhas do tabuleiro
+     * @param cols número de colunas do tabuleiro
+     * @param stc solução-tabuleiro-em-construção com o tabuleiro inicial
+     * @param rowClues pistas de linha
+     * @param colClues pistas de coluna
+     * @requires rows > 0 && cols > 0 && isValidBoardInConstruction(stc)
+     * @return true se todas as condições se verificam; false caso contrário
+     */
 	public static boolean isBoard(int rows, int cols, String stc, String rowClues, String colClues)
 	{
 		if (rows * cols != stc.length() || rows * cols < 10)
@@ -151,9 +182,9 @@ public class ShIPBattle {
     
     /**
      * Calcula a linha de uma posicao do tabuleiro
-     * @param pos a posicao
+     * @param pos a posicao no tabuleiro
      * @param numColumns o número de colunas
-     * @return o número de linha da posicao
+     * @return a linha da posição
      * @requires {@code pos >= 0 && numColumns > 0}
      * @ensures {@code \result < pos}
      */
@@ -183,7 +214,7 @@ public class ShIPBattle {
 
 
     /**
-     * Verifica se stc representa uma solucao-tabuleiro-em-construcao
+     * Verifica se stc representa uma solucao-tabuleiro-em-construção
      * @param stc o string a verificar
      * @return true se é  uma solução-tabuleiro-em-construção e false se não á  uma solução-tabuleiro-em-construção
      */
@@ -202,7 +233,8 @@ public class ShIPBattle {
 
     /**
      * Verifica se todas as posicoes estao preenchidas
-     * @param stc o String a verificar
+     * @param stc solução-tabuleiro-em-construção
+     * @requires  solução-tabuleiro-em-construção válido
      * @return true se todas as posicões estão preenchidas e false se há posicões que ainda não estão preenchidas
      */
     static boolean isFilled( String stc){
@@ -217,12 +249,16 @@ public class ShIPBattle {
     }
 
     /**
-     * Verifica se a jogada é válida
-     * @param board o tabuleiro inicial 
-     * @param stc uma solução-tabuleiro-em-construção
-     * @param c a ação jogada
-     * @param pos uma posição da jogada
-     * @return retorna true se a jogada é válida e false se é inválida
+     * Verifica se a jogada é válida * não está preenchida no tabuleiro inicial board, e c é uma peça de navio,
+     * 
+    * @param stc solução-tabuleiro-em-construção atual
+     * @param board tabuleiro inicial
+     * @param pos posição da jogada
+     * @param c ação da jogada
+     * @requires {@code isValidBoardInConstruction(stc)
+     *           && isValidBoardInConstruction(board)
+     *           && stc.length() == board.length()}
+     * @return true se a jogada é válida; false caso contrário
      */
     static boolean isValidMove(String stc, String board, int pos, char c ){
   
@@ -241,6 +277,9 @@ public class ShIPBattle {
      * @param stc  uma soluçãotabuleiro-em-construção,
      * @param c uma jogada
      * @param pos uma posiçao do tabuleiro
+     *  @requires  {@code isValidBoardInConstruction(stc)
+     *           && 0 <= pos < stc.length()
+     *           && (isFillingChar(c) || c == '.')}
      * @return  a solução-tabuleiro-em-construção que resulta de efetuar a jogada
      */
     static String playMove (String stc, int pos, char c){
@@ -250,7 +289,24 @@ public class ShIPBattle {
     }
     
 
-
+    /**
+     * Verifica se stc é uma solução do tabuleiro inicial board: stc tem o
+     * mesmo tamanho de board e está totalmente preenchida; mantém as peças
+     * iniciais de board; respeita as pistas de linha e de coluna; contém os
+     * quatro navios (tamanhos 1, 2, 3 e 4); e todas as peças de navio estão
+     * corretamente rodeadas (navios não se tocam, nem na diagonal).
+     *
+     * @param rows número de linhas do tabuleiro
+     * @param cols número de colunas do tabuleiro
+     * @param board tabuleiro inicial
+     * @param rowClues pistas de linha
+     * @param colClues pistas de coluna
+     * @param stc solução-tabuleiro-em-construção a verificar
+     * @requires {@code rows > 0 && cols > 0
+     *           && isBoard(rows, cols, board, rowClues, colClues)
+     *           && isValidBoardInConstruction(stc)}
+     * @return true se stc é solução de board; false caso contrário
+     */
     static boolean isSolution (int rows, int cols, String board, String rowClues, String colClues, String stc ){
         return isFilled( stc) 
                 && sameSize(stc, board) 
@@ -260,6 +316,17 @@ public class ShIPBattle {
         
     }
     
+    /**
+     * Verifica se a solução-tabuleiro-em-construção tem o mesmo tamanho do
+     * tabuleiro inicial e se está totalmente preenchida (sem pontos).
+     *
+     * @param stc solução-tabuleiro-em-construção a verificar
+     * @param board tabuleiro inicial
+     * @requires isValidBoardInConstruction(stc)
+     *           && isValidBoardInConstruction(board)
+     * @return true se stc.length() == board.length() e stc não contém '.';
+     *         false caso contrário
+     */
     static boolean sameSize(String stc, String board){ 
         for (int i = 0; i < stc.length() ; i++ ){
             if(stc.length() != board.length() || stc.charAt(i)== '.')
@@ -268,6 +335,17 @@ public class ShIPBattle {
         return true;
     }
 
+    /**
+     * Verifica se todas as peças já preenchidas no tabuleiro inicial se
+     * mantêm, nas mesmas posições, na solução-tabuleiro-em-construção.
+     *
+     * @param stc solução-tabuleiro-em-construção a verificar
+     * @param board tabuleiro inicial
+     * @requires {@code isValidBoardInConstruction(stc) && isValidBoardInConstruction(board)
+     *           && stc.length() == board.length()}
+     * @return true se, para cada posição preenchida em board, stc tem o mesmo
+     *         carácter; false caso contrário
+     */
     static boolean samePieces(String stc, String board){ 
         for (int i = 0; i < stc.length() ; i++ ){
             if( board.charAt(i)!= '.' &&  stc.charAt(i)!= board.charAt(i))
@@ -276,6 +354,20 @@ public class ShIPBattle {
         return true;
     }
 
+
+    /**
+     * Verifica se o número de peças de navio em cada linha e em cada coluna
+     * de stc coincide com a pista correspondente.
+     *
+     * @param cols número de colunas do tabuleiro
+     * @param rowClues pistas de linha (um dígito por linha)
+     * @param colClues pistas de coluna (um dígito por coluna)
+     * @param stc solução-tabuleiro-em-construção a verificar
+     * @requires {@code cols > 0 && isValidBoardInConstruction(stc) && rowClues e colClues só contêm dígitos
+     *           && colClues.length() == col && stc.length() == rowClues.length() * cols}
+     * @return true se todas as pistas de linha e de coluna são respeitadas;
+     *         false caso contrário
+     */
     static boolean cluesMatch( int cols, String rowClues, String colClues, String stc){ 
         for (int i = 0; i < rowClues.length() ; i ++){
             if (countShipPiecesInRow( i+1, stc, cols) != Character.getNumericValue(rowClues.charAt(i)))
@@ -288,33 +380,51 @@ public class ShIPBattle {
         return true;
     }
 
-    
+     /**
+     * Devolve o carácter de uma posição do tabuleiro, dada por linha e coluna numeradas a partir de 0. Posições fora do tabuleiro são tratadas como
+     * água, o que simplifica a verificação dos vizinhos de peças junto ao limite do tabuleiro.
+     *
+     * @param stc solução-tabuleiro-em-construção
+     * @param rows número de linhas do tabuleiro
+     * @param cols número de colunas do tabuleiro
+     * @param r linha (a partir de 0), possivelmente fora do tabuleiro
+     * @param c coluna (a partir de 0), possivelmente fora do tabuleiro
+     * @requires {@code rows > 0 && cols > 0 && stc.length() == rows * cols}
+     * @return o carácter de stc na posição (r, c) se estiver dentro do tabuleiro; 'X' caso contrário
+     */
     static char character(String stc, int rows, int cols, int r, int c) {
         if (r < 0 || r >= rows || c < 0 || c >= cols) return 'X';
         return stc.charAt(r * cols + c);
     }
     /**
-     * 
-     * @param c
-     * @param r
-     * @param rows
-     * @param cols
-     * @param stc
-     * @return
+     * Verifica se as quatro posições diagonais à volta de uma posição são água (posições fora do tabuleiro contam como água).
+     *
+     * @param c coluna da posição (a partir de 0)
+     * @param r linha da posição (a partir de 0)
+     * @param rows número de linhas do tabuleiro
+     * @param cols número de colunas do tabuleiro
+     * @param stc solução-tabuleiro-em-construção
+     * @requires {@code rows > 0 && cols > 0 && stc.length() == rows * cols && 0 <= r < rows && 0 <= c < cols}
+     * @return true se as quatro diagonais de (r, c) são água; false caso contrário
      */
+
     static boolean diagonalIsWater( int c, int r, int rows, int cols, String stc){
         return character(stc, rows, cols, r-1, c-1) == 'X' && character(stc, rows, cols, r-1, c+1) == 'X' 
         && character(stc, rows, cols, r+1, c-1) == 'X' && character(stc, rows, cols, r+1, c+1) == 'X';
     }
 
-    /**
-     * 
-     * @param stc
-     * @param rows
-     * @param cols
-     * @param r
-     * @param c
-     * @return
+     /**
+     * Verifica se a peça numa posição está corretamente rodeada, de acordo com o seu tipo: as diagonais têm de ser água e os vizinhos ortogonais
+     * têm de ser água ou a continuação do navio (por exemplo, um 'L' tem água à esquerda, em cima e em baixo, e 'R' ou 'M' à direita).
+     * Para a água ('X') devolve true.
+     *
+     * @param stc solução-tabuleiro-em-construção
+     * @param rows número de linhas do tabuleiro
+     * @param cols número de colunas do tabuleiro
+     * @param r linha da peça (a partir de 0)
+     * @param c coluna da peça (a partir de 0)
+     * @requires {@code rows > 0 && cols > 0 && stc.length() == rows * cols && 0 <= r < rows && 0 <= c < cols }
+     * @return true se a peça em (r, c) está bem rodeada; false caso contrário
      */
     static boolean wellSurrounded( String stc, int rows, int cols, int r, int c){
         char pos = character(stc, rows, cols, r, c);
@@ -348,13 +458,31 @@ public class ShIPBattle {
     }
 
     /**
-     * 
-     * @param stc
-     * @param c
-     * @param r
-     * @param rows
-     * @param cols
-     * @return
+     * Conta o número total de peças de navio numa solução-tabuleiro-em-construção.
+     *
+     * @param stc solução-tabuleiro-em-construção
+     * @requires isValidBoardInConstruction(stc)
+     * @return o número de peças de navio em stc
+     */
+    static int totalShipPieces(String stc) {
+        int count = 0;
+        for (int i = 0; i < stc.length(); i++) {
+            if (isShipPiece(stc.charAt(i)))
+                count++;
+        }
+        return count;
+}
+
+    /**
+     * Verifica se todas as peças de navio estão bem rodeadas e se o tabuleiro tem todos os naviod
+     * está completa: um navio de tamanho 1, um de tamanho 2, um de tamanho 3
+     * e um de tamanho 4, cada um deles uma só vez.
+     *
+     * @param stc solução-tabuleiro-em-construção totalmente preenchida
+     * @param rows número de linhas do tabuleiro
+     * @param cols número de colunas do tabuleiro
+     * @requires {@code rows > 0 && cols > 0 && stc.length() == rows * cols && isFilled(stc)}
+     * @return true se todas as peças de navio estão bem rodeadas e existen exatamente a armada pedida; false caso contrário
      */
     static boolean allShips(String stc, int rows, int cols){
         
@@ -406,10 +534,23 @@ public class ShIPBattle {
                 }         
             }
         }
-        return tamanho1 && tamanho2 && tamanho3 && tamanho4;
+        return tamanho1 && tamanho2 && tamanho3 && tamanho4 && totalShipPieces(stc) == 10;
     }
 
-
+    /**
+     * Imprime uma solução-tabuleiro-em-construção em forma de quadrícula.
+     * Cada linha do tabuleiro é impressa numa linha, seguida de um espaço e da
+     * respetiva pista de linha; por baixo são impressas as pistas de coluna,
+     * alinhadas com as colunas.
+     *
+     * @param rows número de linhas do tabuleiro
+     * @param cols número de colunas do tabuleiro
+     * @param stc solução-tabuleiro-em-construção a imprimir
+     * @param rowClues pistas de linha
+     * @param colClues pistas de coluna
+     * @requires {@code rows > 0 && cols > 0 && isValidBoardInConstruction(stc) && stc.length() == rows * cols
+     *           && rowClues.length() == rows && colClues.length() == cols}
+     */
 	public static void	printBoard(int row, int col, String stc, String rowClues, String colClues)
 	{
 		int	row_index = 0;
@@ -423,6 +564,20 @@ public class ShIPBattle {
 		System.out.println(colClues);
 	}
 
+    /**
+     * Permite ao utilizador jogar o ShIPBattle. Inicializa a solução com o tabuleiro inicial e, repetidamente, imprime o tabuleiro, lê uma jogada
+     * e se for válida, efetua-a; caso contrário indica que é inválida. Termina quando stc é solução de board ou quando o utilizador introduz -1 como 
+     * posição, imprimindo uma mensagem apropriada.
+     *
+     * @param sc canal de leitura do standard input
+     * @param rows número de linhas do tabuleiro
+     * @param cols número de colunas do tabuleiro
+     * @param board tabuleiro inicial
+     * @param rowClues pistas de linha
+     * @param colClues pistas de coluna
+     * @requires {@code sc aberto && rows > 0 && cols > 0 && isBoard(rows, cols, board, rowClues, colClues)}
+     */
+
 	public static void play(Scanner sc, int rows, int cols, String board, String rowClues, String colClues) {
 		String	stc = board;
 		int 	position = 0;
@@ -432,8 +587,8 @@ public class ShIPBattle {
 		do
 		{
             if (isSolution(rows, cols, board, rowClues, colClues, stc))
-            {
-                System.out.println("Parabens voce Ganhou!!!");
+            {   printBoard(rows, cols, stc, rowClues, colClues);
+                System.out.println("Parabéns!!! Encontrou todos os navios em ShIPBattle!");
                 return ;
             }
 			checkInvalid = false;
