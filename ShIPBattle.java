@@ -666,7 +666,8 @@ public class ShIPBattle {
 			if (rows >= 0 && cols >= 0 && isBoard(rows, cols, stc, rowClues, colClues))
 				play(sc, rows, cols, stc, rowClues, colClues);
 			else
-				System.out.println("Tabuleiro inicial inválido! Verifique o tamanho, as pistas fornecidas, ou as peças no tabuleiro inicial.\r\n");				
+				System.out.println("Tabuleiro inicial inválido! Verifique o tamanho, as pistas fornecidas, ou as peças no tabuleiro inicial.\r\n");
+            sc.close();
 			return ;
 		}
 		System.out.print("Número de linhas: ");
@@ -686,6 +687,7 @@ public class ShIPBattle {
 		if (rows >= 0 && rows <= 9 && cols >= 0  && cols <= 9 && isBoard(rows, cols, stc, rowClues, colClues))
 			play(sc, rows, cols, stc, rowClues, colClues);
 		else
-			System.out.println("Tabuleiro inicial inválido! Verifique o tamanho, as pistas fornecidas, ou as peças no tabuleiro inicial.\r\n");		
+			System.out.println("Tabuleiro inicial inválido! Verifique o tamanho, as pistas fornecidas, ou as peças no tabuleiro inicial.\r\n");
+        sc.close();
 	}
 }
