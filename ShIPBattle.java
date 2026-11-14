@@ -1,5 +1,33 @@
 import java.util.Scanner;
 
+/**
+ * A classe {@code ShIPBattle} implementa a lógica para ler, validar e jogar
+ * o jogo ShIPBattle (uma adaptação de Bimaru / Batalha Naval Solitário) através
+ * de uma interface textual na consola, no âmbito da primeira parte do projeto
+ * de Introdução à Programação (IP) 2026/2027.
+ * 
+ * <p>O jogo consiste numa grelha retangular (n x m) onde o jogador deve
+ * posicionar uma armada composta por quatro navios (um couraçado de tamanho 4,
+ * um cruzador de tamanho 3, um contratorpedeiro de tamanho 2 e um submarino de
+ * tamanho 1), respeitando as pistas numéricas de cada linha e coluna, as peças
+ * fixas iniciais e a regra de que dois navios não se podem tocar, nem mesmo
+ * na diagonal.</p>
+ * 
+ * <p>Para compilar e executar o programa:</p>
+ * <pre>
+ *     javac ShIPBattle.java
+ *     java ShIPBattle
+ * </pre>
+ * 
+ * <p>Opcionalmente, podem ser passados os 5 argumentos do tabuleiro inicial
+ * diretamente na linha de comandos (linhas, colunas, tabuleiro, pistas de linha
+ * e pistas de coluna).</p>
+ *
+ * @author Gustavo Siqueira (fc67377)
+ * @author Kaoutar Sebbagh (fc67410)
+ * @version 1.0
+ */
+
 public class ShIPBattle {
 
 	/**
