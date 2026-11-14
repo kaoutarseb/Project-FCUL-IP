@@ -85,9 +85,9 @@ public class ShIPBattle {
      * @param row linha a considerar (numerada a partir de 1)
      * @param stc solução-tabuleiro-em-construção
      * @param numColumns número de colunas do tabuleiro
-     * @requires isValidBoardInConstruction(stc) && numColumns > 0
+     * @requires {@code isValidBoardInConstruction(stc) && numColumns > 0
      *           && stc.length() % numColumns == 0
-     *           && 1 <= row <= numberRows(stc.length(), numColumns)
+     *           && 1 <= row <= numberRows(stc.length(), numColumns)}
      * @return o número de peças de navio na linha row de stc
 	 */
 
@@ -109,8 +109,8 @@ public class ShIPBattle {
      * @param col coluna a considerar (numerada a partir de 1)
      * @param stc solução-tabuleiro-em-construção
      * @param numColumns número de colunas do tabuleiro
-     * @requires isValidBoardInConstruction(stc) && numColumns > 0
-     *           && stc.length() % numColumns == 0 && 1 <= col <= numColumns
+     * @requires {@code isValidBoardInConstruction(stc) && numColumns > 0
+     *           && stc.length() % numColumns == 0 && 1 <= col <= numColumns}
      * @return o número de peças de navio na coluna col de stc
 	 */
 
@@ -132,9 +132,9 @@ public class ShIPBattle {
      * @param row linha a considerar (numerada a partir de 1)
      * @param stc solução-tabuleiro-em-construção
      * @param numColumns número de colunas do tabuleiro
-     * @requires isValidBoardInConstruction(stc) && numColumns > 0
+     * @requires {@code isValidBoardInConstruction(stc) && numColumns > 0
      *           && stc.length() % numColumns == 0
-     *           && 1 <= row <= numberRows(stc.length(), numColumns)
+     *           && 1 <= row <= numberRows(stc.length(), numColumns)}
      * @return o número de peças de água na linha row de stc
 	 */
 
@@ -155,10 +155,9 @@ public class ShIPBattle {
      * @param col coluna a considerar (numerada a partir de 1)
      * @param stc solução-tabuleiro-em-construção
      * @param numColumns número de colunas do tabuleiro
-     * @requires isValidBoardInConstruction(stc) && numColumns > 0
-     *           && stc.length() % numColumns == 0 && 1 <= col <= numColumns
-
-	 */
+     * @requires {@code isValidBoardInConstruction(stc) && numColumns > 0
+     *           && stc.length() % numColumns == 0 && 1 <= col <= numColumns}
+     */
 
 	public static int countWaterPiecesInCol(int col, String stc, int numColumns)
 	{
@@ -183,7 +182,7 @@ public class ShIPBattle {
      * @param stc solução-tabuleiro-em-construção com o tabuleiro inicial
      * @param rowClues pistas de linha
      * @param colClues pistas de coluna
-     * @requires rows > 0 && cols > 0 && isValidBoardInConstruction(stc)
+     * @requires {@code rows > 0 && cols > 0 && isValidBoardInConstruction(stc)}
      * @return true se todas as condições se verificam; false caso contrário
      */
 	public static boolean isBoard(int rows, int cols, String stc, String rowClues, String colClues)
@@ -409,7 +408,8 @@ public class ShIPBattle {
     }
 
      /**
-     * Devolve o carácter de uma posição do tabuleiro, dada por linha e coluna numeradas a partir de 0. Posições fora do tabuleiro são tratadas como
+     * Devolve o carácter de uma posição do tabuleiro, dada por linha e coluna 
+     * numeradas a partir de 0. Posições fora do tabuleiro são tratadas como
      * água, o que simplifica a verificação dos vizinhos de peças junto ao limite do tabuleiro.
      *
      * @param stc solução-tabuleiro-em-construção
@@ -425,7 +425,8 @@ public class ShIPBattle {
         return stc.charAt(r * cols + c);
     }
     /**
-     * Verifica se as quatro posições diagonais à volta de uma posição são água (posições fora do tabuleiro contam como água).
+     * Verifica se as quatro posições diagonais à volta de uma posição 
+     * são água (posições fora do tabuleiro contam como água).
      *
      * @param c coluna da posição (a partir de 0)
      * @param r linha da posição (a partir de 0)
@@ -442,8 +443,10 @@ public class ShIPBattle {
     }
 
      /**
-     * Verifica se a peça numa posição está corretamente rodeada, de acordo com o seu tipo: as diagonais têm de ser água e os vizinhos ortogonais
-     * têm de ser água ou a continuação do navio (por exemplo, um 'L' tem água à esquerda, em cima e em baixo, e 'R' ou 'M' à direita).
+     * Verifica se a peça numa posição está corretamente rodeada, de acordo 
+     * com o seu tipo: as diagonais têm de ser água e os vizinhos ortogonais
+     * têm de ser água ou a continuação do navio (por exemplo, um 'L' tem água
+     *  à esquerda, em cima e em baixo, e 'R' ou 'M' à direita).
      * Para a água ('X') devolve true.
      *
      * @param stc solução-tabuleiro-em-construção
@@ -593,8 +596,10 @@ public class ShIPBattle {
 	}
 
     /**
-     * Permite ao utilizador jogar o ShIPBattle. Inicializa a solução com o tabuleiro inicial e, repetidamente, imprime o tabuleiro, lê uma jogada
-     * e se for válida, efetua-a; caso contrário indica que é inválida. Termina quando stc é solução de board ou quando o utilizador introduz -1 como 
+     * Permite ao utilizador jogar o ShIPBattle. Inicializa a solução com o tabuleiro 
+     * inicial e, repetidamente, imprime o tabuleiro, lê uma jogada
+     * e se for válida, efetua-a; caso contrário indica que é inválida. 
+     * Termina quando stc é solução de board ou quando o utilizador introduz -1 como 
      * posição, imprimindo uma mensagem apropriada.
      *
      * @param sc canal de leitura do standard input
