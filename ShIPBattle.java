@@ -295,7 +295,7 @@ public class ShIPBattle {
             return false;
         if (isFillingChar(board.charAt(pos)))
             return false;
-        if (!isFillingChar(c))
+        if (!isFillingChar(c) && c != '.')
             return false;
         
         return true;
