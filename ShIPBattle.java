@@ -194,13 +194,15 @@ public class ShIPBattle {
 
 		for (int i = 0; i < rowClues.length(); i++)
 		{
-			if (!Character.isDigit(rowClues.charAt(i)) || Character.getNumericValue(rowClues.charAt(i)) > cols || countShipPiecesInRow(i + 1, stc, cols) > Character.getNumericValue(rowClues.charAt(i)))
+            int clue = Character.getNumericValue(rowClues.charAt(i));
+			if (!Character.isDigit(rowClues.charAt(i)) || countShipPiecesInRow(i + 1, stc, cols) > clue || clue > cols - countWaterPiecesInRow(i + 1, stc, cols))
 				return false;
 		}
 
 		for (int i = 0; i < colClues.length(); i++)
 		{
-			if (!Character.isDigit(colClues.charAt(i)) || Character.getNumericValue(colClues.charAt(i)) > rows  || countShipPiecesInCol(i + 1, stc, cols) > Character.getNumericValue(colClues.charAt(i)))
+            int clue = Character.getNumericValue(colClues.charAt(i));
+			if (!Character.isDigit(colClues.charAt(i)) || countShipPiecesInCol(i + 1, stc, cols) > clue|| clue > rows - countWaterPiecesInCol(i + 1, stc, cols))
 				return false;
 		}
 
